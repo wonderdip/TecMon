@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://cioculng6slbj"]
+
+[ext_resource type="PackedScene" uid="uid://bqklp8i7b2iel" path="res://Scenes/Level.tscn" id="1_e5fcp"]
+[ext_resource type="PackedScene" uid="uid://bussxwbdfugjx" path="res://Scenes/message_manager.tscn" id="1_oj352"]
+
+[node name="GameManager" type="Node" unique_id=818834755]
+
+[node name="Game" type="Control" parent="." unique_id=1059511189]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Game" unique_id=75186392]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Game/SubViewportContainer" unique_id=1688781771]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(1280, 720)
+size_2d_override = Vector2i(320, 160)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="Level" parent="Game/SubViewportContainer/SubViewport" unique_id=524519435 instance=ExtResource("1_e5fcp")]
+
+[node name="MessageManager" parent="." unique_id=572602725 instance=ExtResource("1_oj352")]
