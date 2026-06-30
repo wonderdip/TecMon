@@ -18,6 +18,7 @@ var _player_is_fleeing: bool = false
 
 func start_battle(enemy_instance: Array[TecmonInstance], party: Array[TecmonInstance]) -> void:
 	player_party = party
+	
 	player_participant = BattleParticipant.create(party, true)
 	enemy_participant  = BattleParticipant.create(enemy_instance, false)
 	phase = TurnPhase.AWAITING_INPUT
@@ -83,16 +84,19 @@ func execute_turn() -> void:
 		await _say(player_participant.display_name() + " fainted!")
 		if player_participant.all_fainted != true:
 			var count = 0
-			while player_participant.current_mon.is_fainted() and count < player_participant.party.size():
-				player_participant.current_mon = player_participant.party[count]
+			while player_participant.current_mon.is_fainted() and count <= player_participant.party.size():
+				if count < player_participant.party.size():
+					player_participant.current_mon = player_participant.party[count]
 				count += 1
-			if count == player_participant.party.size():
+			print("Count out of While: " + str(count))
+			if count > player_participant.party.size():
 				player_participant.all_fainted = true
 				_end_battle(BattleOutcome.PLAYER_LOST)
 				return
 			else:
-				pass
-				#await _say("Opponent sent out " + enemy_participant.current_mon.display_name())
+				await _say("Player sent out " + player_participant.current_mon.display_name())
+		else:
+			_end_battle(BattleOutcome.PLAYER_LOST)
 				
 
 	_queued_player_move = null

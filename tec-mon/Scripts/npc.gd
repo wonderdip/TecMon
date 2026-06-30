@@ -12,9 +12,13 @@ func _ready() -> void:
 		party_data.pop_front()
 
 func interact() -> void:
+	reset()
 	MessageBus.send(["Hello!", "Let's BATTLE!"], 20)
 	await MessageBus.message_box_closed
 	await SceneManager._transition_out()
-	var p_party: Array[TecmonInstance] = Global.player.tecmon_party
-	BattleSystem.start_battle(party_instance, p_party)
+	BattleSystem.start_battle(party_instance, Global.player.tecmon_party)
 	# AudioManager.play_sfx("")
+func reset() -> void:
+	for mon in party_instance:
+		mon.current_hp = mon.max_hp
+		mon.clear_all_ailments()

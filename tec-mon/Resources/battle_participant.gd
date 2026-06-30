@@ -26,14 +26,16 @@ static func create(party: Array[TecmonInstance], player_side: bool) -> BattlePar
 	p.current_mon = p.party[0]
 	
 	var count = 0
-	while p.current_mon.is_fainted() and count < p.party.size():
-		p.current_mon = p.party[count]
+	while p.current_mon.is_fainted() and count <= p.party.size():
+		if count < p.party.size():
+			p.current_mon = p.party[count]
 		count += 1
 		
-	if count == p.party.size():
+	if count > p.party.size():
 		p.all_fainted = true
 		
 	p.is_player_side = player_side
+	
 	return p
 
 func effective_stat(stat: Enums.TecmonStat) -> float:
