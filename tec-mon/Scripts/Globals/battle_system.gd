@@ -16,6 +16,7 @@ var phase: TurnPhase = TurnPhase.IDLE
 
 var _queued_player_move: MoveInstance = null
 var _player_is_fleeing: bool = false
+var _player_skipping: bool = false
 
 func start_battle(enemy_instance: Array[TecmonInstance], party: Array[TecmonInstance]) -> void:
 	player_party = party
@@ -36,6 +37,14 @@ func queue_flee() -> void:
 	if phase != TurnPhase.AWAITING_INPUT:
 		return
 	_player_is_fleeing = true
+	execute_turn()
+
+func skip_turn() -> void:
+	if phase != TurnPhase.AWAITING_INPUT:
+		return
+	_queued_player_move = null
+	_player_is_fleeing = false
+	_player_skipping = true
 	execute_turn()
 
 func execute_turn() -> void:
@@ -104,7 +113,9 @@ func execute_turn() -> void:
 	turn_ended.emit()
 
 func _resolve_move(user: BattleParticipant, target: BattleParticipant, move_inst: MoveInstance) -> void:
-	if move_inst == null or not move_inst.has_pp():
+	if move_inst == null:
+		if user.is_player_side and _player_skipping:
+			return
 		await _say(user.display_name() + " has no moves left!")
 		return
 

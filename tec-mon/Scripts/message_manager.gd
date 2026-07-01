@@ -5,6 +5,11 @@ extends CanvasLayer
 @export var label: RichTextLabel
 
 @export_category("Variables")
+@export var cursor_frames: Array[Texture2D] = []
+@export var cursor_fps: float = 6.0
+@export var battle_timer: float = 0.5
+@export var normal_timer: float = 2
+
 @export var is_scrolling: bool = false
 @export_multiline() var Messages: Array[String] = []
 
@@ -20,6 +25,9 @@ var normal_size: Vector2
 var battle_mode: bool = false
 var _passive: bool = false  ## True when showing text that doesn't wait for input.
 var timer_done
+var _cursor_frame_index: int = 0
+var _cursor_anim_timer: Timer
+
 func _ready() -> void:
 	visible = false
 	normal_position = box.position
@@ -27,16 +35,22 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_DISABLED
 	box.visible = false
 	container.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
+	
 	MessageBus.register(self)
 	MessageBus.message_requested.connect(_on_message_requested)
 	BattleSystem.battle_started.connect(_on_battle_started)
 	BattleSystem.battle_ended.connect(_on_battle_ended)
 	message_timer.timeout.connect(_on_timer_timeout)
 	
+	_cursor_anim_timer = Timer.new()
+	_cursor_anim_timer.wait_time = 1.0 / cursor_fps
+	_cursor_anim_timer.timeout.connect(_advance_cursor_frame)
+	add_child(_cursor_anim_timer)
+	
 func _on_timer_timeout(): 
 	if _waiting_for_input:
 		_waiting_for_input = false
+		AudioManager.play_sfx("select")
 		advanced.emit()
 			
 func _on_battle_started() -> void:
@@ -112,11 +126,16 @@ func play_text(payload: Array[String], speed: int) -> void:
 			label.visible_characters = i + 1
 			AudioManager.play_sfx("dialog", -15, 1)
 			await get_tree().create_timer(1.0 / speed).timeout
+		
+		show_cursor()
 		label.visible_characters = -1
 		is_scrolling = false
 		Messages.remove_at(0)
 		_waiting_for_input = true
-		message_timer.start()
+		if battle_mode:
+			message_timer.start(battle_timer)
+		else:
+			message_timer.start(normal_timer)
 		await advanced
 
 	_closing = true
@@ -126,7 +145,30 @@ func play_text(payload: Array[String], speed: int) -> void:
 	await get_tree().create_timer(0.1).timeout
 	_closing = false
 	MessageBus.notify_closed()
+	
+func show_cursor() -> void:
+	label.visible_characters = -1
+	_cursor_frame_index = 0
+	_append_cursor_frame()
+	_cursor_anim_timer.start()
 
+func _advance_cursor_frame() -> void:
+	if not _waiting_for_input:
+		_cursor_anim_timer.stop()
+		return
+	_cursor_frame_index = (_cursor_frame_index + 1) % cursor_frames.size()
+	_strip_last_cursor_tag()
+	_append_cursor_frame()
+
+func _append_cursor_frame() -> void:
+	var tex := cursor_frames[_cursor_frame_index]
+	label.text += "[img=" + str(tex.get_width()) + "x" + str(tex.get_height()) + "]" + tex.resource_path + "[/img]"
+
+func _strip_last_cursor_tag() -> void:
+	var idx := label.text.rfind("[img=")
+	if idx != -1:
+		label.text = label.text.substr(0, idx)
+	
 func is_reading() -> bool:
 	## Passive counts as "showing" but not as "reading" for input purposes.
 	## BattleSystem's _say() checks MessageBus.message_box_closed, not is_reading.

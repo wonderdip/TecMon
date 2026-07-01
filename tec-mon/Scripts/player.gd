@@ -10,6 +10,7 @@ class_name Player
 @export var walk_speed: float = 64.0
 @export var run_speed: float = 128.0
 @export var is_walking: bool = false
+var is_running: bool = false
 
 @export_category("Jumping")
 @export var jump_height: float = 10.0
@@ -33,6 +34,7 @@ var move_direction: Vector2 = Vector2.ZERO
 var last_direction: Vector2 = Vector2.DOWN
 var direction_keys: Array = []
 var movement_blocked: bool = false
+var current_move_speed: float = walk_speed
 
 var tecmon_party: Array[TecmonInstance]
 var inventory: Inventory = Inventory.new()
@@ -107,13 +109,13 @@ func read_input() -> void:
 	start_moving()
 
 func start_moving() -> void:
-	var desired_target : Vector2 = global_position + move_direction * TILE_SIZE
-
+	var desired_target: Vector2 = global_position + move_direction * TILE_SIZE
 	if is_target_occupied(desired_target):
 		return
-	
 	target_position = desired_target
-
+	current_move_speed = run_speed if Input.is_action_pressed("run") else walk_speed
+	is_running = current_move_speed == run_speed
+	
 	if character_action == CharacterMovement.JUMPING:
 		progress = 0.0
 		start_position = global_position
@@ -126,19 +128,15 @@ func start_moving() -> void:
 func walk(delta: float) -> void:
 	if not is_walking:
 		return
-	var move_speed: float = walk_speed
 	var dir_to_target := target_position - global_position
-	var dist_this_frame := move_speed * delta
-	
-	if Input.is_action_pressed("run"):
-		move_speed = run_speed
-	
+	var dist_this_frame := current_move_speed * delta
+
 	if dir_to_target.length() <= dist_this_frame:
 		global_position = target_position
 		velocity = Vector2.ZERO
 		stop_moving()
 	else:
-		velocity = dir_to_target.normalized() * move_speed
+		velocity = dir_to_target.normalized() * current_move_speed
 		move_and_slide()
 
 func jump(delta: float) -> void:
@@ -164,6 +162,11 @@ func stop_moving() -> void:
 	is_jumping = false
 	character_action = CharacterMovement.WALKING
 	snap_position_to_grid()
+
+	## If the player is still holding a direction, immediately queue the next
+	## tile instead of dropping to Idle for a frame.
+	if not direction_keys.is_empty() and not movement_blocked and not MessageBus.is_reading():
+		read_input()
 
 func snap_position_to_grid() -> void:
 	global_position = Vector2(
@@ -252,10 +255,9 @@ func _get_tile_map_collision(tile_map: TileMapLayer, query_pos: Vector2) -> bool
 func update_animation() -> void:
 	animation_tree.set("parameters/Idle/blend_position", last_direction)
 	animation_tree.set("parameters/Walking/blend_position", last_direction)
+	animation_tree.set("parameters/Running/blend_position", last_direction)
 
-	if is_moving():
-		if state_machine.get_current_node() != "Walking":
-			state_machine.travel("Walking")
-	else:
-		if state_machine.get_current_node() != "Idle":
-			state_machine.travel("Idle")
+	var moving := is_moving()
+	animation_tree.set("parameters/conditions/Idle", not moving)
+	animation_tree.set("parameters/conditions/Walking", moving and not is_running)
+	animation_tree.set("parameters/conditions/Running", moving and is_running)

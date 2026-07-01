@@ -1,45 +1,82 @@
 [gd_scene format=3 uid="uid://dc71oj1pdd6ct"]
 
+[ext_resource type="FontFile" uid="uid://cnww23kfbhjq0" path="res://Assets/Fonts/Minecraft.ttf" id="1_rldbs"]
 [ext_resource type="Script" uid="uid://y884e2b5ppad" path="res://Scripts/tecmon_details.gd" id="1_xst1j"]
 [ext_resource type="Texture2D" uid="uid://b7rjuaf05hflh" path="res://Assets/Tecmons/ShadowSaint/ShadowSaintMini.png" id="1_xydj4"]
+[ext_resource type="Texture2D" uid="uid://dl3hbw0qxuj1q" path="res://Assets/UI/tecmon_frame.png" id="2_wur2x"]
+[ext_resource type="Texture2D" uid="uid://daq1hfl0vv2rd" path="res://Assets/UI/tecmon_fainted_frame.png" id="3_uy1hy"]
+[ext_resource type="Texture2D" uid="uid://bd2t7hxuv6akr" path="res://Assets/UI/HpBarFrame.png" id="5_l4pcy"]
+[ext_resource type="Texture2D" uid="uid://b17jlha1in0s7" path="res://Assets/UI/HpBar.png" id="6_uy1hy"]
+[ext_resource type="Texture2D" uid="uid://ck728iyfkb030" path="res://Assets/UI/hover_outline.png" id="8_h3qvm"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cc6so"]
-bg_color = Color(0.6, 0.023529412, 0, 0.5372549)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+[sub_resource type="Theme" id="Theme_xst1j"]
+default_font = ExtResource("1_rldbs")
+default_font_size = 8
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yutts"]
+texture = ExtResource("2_wur2x")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l4pcy"]
+texture = ExtResource("3_uy1hy")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_awwja"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gjgov"]
+texture = ExtResource("6_uy1hy")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
 
 [node name="TecmonDetails" type="Button" unique_id=1763784340]
-offset_right = 168.0
-offset_bottom = 46.0
+custom_minimum_size = Vector2(135, 22)
+custom_maximum_size = Vector2(-1, 22)
+anchors_preset = -1
+anchor_right = 0.421875
+anchor_bottom = 0.15
 size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_styles/disabled = SubResource("StyleBoxFlat_cc6so")
+theme = SubResource("Theme_xst1j")
+theme_override_styles/normal = SubResource("StyleBoxTexture_yutts")
+theme_override_styles/hover = SubResource("StyleBoxTexture_yutts")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_l4pcy")
 script = ExtResource("1_xst1j")
+metadata/_edit_use_anchors_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1624401690]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.4625
-anchor_bottom = 0.2875
-offset_right = 70.299995
-offset_bottom = 32.775
-scale = Vector2(1.0074455, 1)
+anchor_left = 0.027777778
+anchor_top = 0.16666669
+anchor_right = 0.9685185
+anchor_bottom = 0.83333325
+offset_left = 0.25
+offset_top = 0.33333302
+offset_right = 0.25
+offset_bottom = 1.6666679
 metadata/_edit_use_anchors_ = true
 
 [node name="MiniTecmon" type="TextureRect" parent="HBoxContainer" unique_id=28824735]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(32, 32)
-custom_maximum_size = Vector2(32, 32)
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("1_xydj4")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=906464624]
+custom_minimum_size = Vector2(0, 16)
+custom_maximum_size = Vector2(-1, 16)
 layout_mode = 2
 theme_override_constants/separation = 0
-alignment = 1
 
 [node name="TecmonName" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1465862387]
 unique_name_in_owner = true
@@ -51,9 +88,54 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Tecmon Lv"
 
-[node name="TecmonHP" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1791462810]
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer" unique_id=944768930]
+custom_minimum_size = Vector2(66, 0)
+custom_maximum_size = Vector2(-1, 16)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer2" unique_id=1134083892]
+custom_maximum_size = Vector2(66, -1)
+layout_mode = 2
+texture = ExtResource("5_l4pcy")
+stretch_mode = 2
+
+[node name="TecmonHPBar" type="ProgressBar" parent="HBoxContainer/VBoxContainer2/TextureRect" unique_id=451740971]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(45, 1)
+custom_maximum_size = Vector2(-1, 3)
+layout_mode = 0
+offset_left = 17.0
+offset_top = 1.9999995
+offset_right = 62.0
+offset_bottom = 4.9999995
+theme_override_styles/background = SubResource("StyleBoxEmpty_awwja")
+theme_override_styles/fill = SubResource("StyleBoxTexture_gjgov")
+value = 100.0
+show_percentage = false
+
+[node name="TecmonHP" type="Label" parent="HBoxContainer/VBoxContainer2" unique_id=1791462810]
+unique_name_in_owner = true
+custom_maximum_size = Vector2(66, -1)
 layout_mode = 2
 text = "Tecmon HP"
 
+[node name="Outline" type="NinePatchRect" parent="." unique_id=812586938]
+layout_mode = 0
+anchor_left = -0.014814815
+anchor_top = -0.083333336
+anchor_right = 1.0148149
+anchor_bottom = 1.0833334
+offset_top = -0.16666663
+offset_bottom = 0.16666603
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("8_h3qvm")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+metadata/_edit_use_anchors_ = true
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="." to="." method="_on_tecmon_details_pressed"]

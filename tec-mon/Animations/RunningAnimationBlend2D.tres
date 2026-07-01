@@ -1,0 +1,28 @@
+[gd_resource type="AnimationNodeBlendSpace2D" format=3 uid="uid://bvlwjuaurwb12"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dewec"]
+animation = &"RunUp"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5ixxa"]
+animation = &"RunRight"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nn08x"]
+animation = &"RunDown"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_52ee3"]
+animation = &"RunLeft"
+
+[resource]
+blend_mode = 1
+blend_point_0/node = SubResource("AnimationNodeAnimation_dewec")
+blend_point_0/pos = Vector2(0, -1)
+blend_point_0/name = &"RunUp"
+blend_point_1/node = SubResource("AnimationNodeAnimation_5ixxa")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_1/name = &"RunRight"
+blend_point_2/node = SubResource("AnimationNodeAnimation_nn08x")
+blend_point_2/pos = Vector2(0, 1)
+blend_point_2/name = &"RunDown"
+blend_point_3/node = SubResource("AnimationNodeAnimation_52ee3")
+blend_point_3/pos = Vector2(-1, 0)
+blend_point_3/name = &"RunLeft"

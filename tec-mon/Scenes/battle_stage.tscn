@@ -7,6 +7,8 @@
 [ext_resource type="FontFile" uid="uid://cnww23kfbhjq0" path="res://Assets/Fonts/Minecraft.ttf" id="2_r2b17"]
 [ext_resource type="Texture2D" uid="uid://bcf6nbb34xmd2" path="res://Assets/Tecmons/ShadowSaint/ShadowSaintBack.png" id="3_a0fsj"]
 [ext_resource type="Texture2D" uid="uid://c382hen5x3oht" path="res://Assets/UI/MessageBox.png" id="4_h1yn0"]
+[ext_resource type="Texture2D" uid="uid://jf1xrasv85op" path="res://Assets/UI/tecmon_menu.png" id="8_4ao26"]
+[ext_resource type="Texture2D" uid="uid://dl3hbw0qxuj1q" path="res://Assets/UI/tecmon_frame.png" id="9_4ao26"]
 
 [sub_resource type="Theme" id="Theme_awwja"]
 default_font = ExtResource("2_r2b17")
@@ -17,7 +19,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("%PlayerTecmon:position")
+tracks/0/path = NodePath("PlayerTecmon:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -34,7 +36,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("%PlayerTecmon:position")
+tracks/0/path = NodePath("PlayerTecmon:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -284,26 +286,74 @@ grow_vertical = 2
 theme = SubResource("Theme_awwja")
 metadata/_edit_use_anchors_ = true
 
-[node name="BackButton" type="Button" parent="TecmonUI" unique_id=951028480]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 40.0
-offset_top = 128.0
-offset_right = 168.0
-offset_bottom = 144.0
-text = "back"
+[node name="ColorRect" type="TextureRect" parent="TecmonUI" unique_id=694081218]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_4ao26")
+metadata/_edit_use_anchors_ = true
 
 [node name="TecmonDetailContainer" type="VBoxContainer" parent="TecmonUI" unique_id=1497098572]
 unique_name_in_owner = true
+custom_maximum_size = Vector2(-1, 144)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.55
 anchor_top = 0.05
 anchor_right = 0.95
-anchor_bottom = 0.9
+anchor_bottom = 0.95
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="TecmonUI" unique_id=1709709918]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 0
+offset_left = 64.0
+offset_top = 8.0
+offset_right = 136.0
+offset_bottom = 80.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("9_4ao26")
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="TecmonSwapTexture" type="TextureRect" parent="TecmonUI/NinePatchRect" unique_id=748429168]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 68.0
+offset_bottom = 68.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_g0eid")
+
+[node name="BackButton" type="Button" parent="TecmonUI" unique_id=951028480]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 136.0
+offset_right = 160.0
+offset_bottom = 152.0
+text = "back"
+
+[node name="TecmonDesc" type="RichTextLabel" parent="TecmonUI" unique_id=1328055538]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 88.0
+offset_right = 160.0
+offset_bottom = 128.0
+text = "placholder"
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="BattleUI/ActionMenu/VBoxContainer/HBoxContainer/Fight" to="." method="_on_fight_pressed"]

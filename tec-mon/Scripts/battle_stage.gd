@@ -22,10 +22,14 @@ extends CanvasLayer
 
 @export var tecmon_details_template: PackedScene
 @onready var tecmon_detail_container: VBoxContainer = %TecmonDetailContainer
+@onready var tecmon_swap_texture: TextureRect = %TecmonSwapTexture
 @onready var animation_player: AnimationPlayer = $BattleUI/AnimationPlayer
+@onready var tecmon_desc: RichTextLabel = %TecmonDesc
 
 var can_input: bool = false
 var buttons: Array[Button]
+var is_switching: bool = false
+var force_switch: bool = false
 
 func _ready() -> void:
 	EncounterManager.encounter_started.connect(_on_encounter_started)
@@ -81,9 +85,10 @@ func _on_turn_ended() -> void:
 func new_turn() -> void:
 	_set_battle_buttons_enabled(true)
 	move_container.hide()
-	MessageBus.send_passive(
-		"What will " + BattleSystem.player_participant.display_name() + " do?"
-	)
+	if not is_switching:
+		MessageBus.send_passive(
+			"What will " + BattleSystem.player_participant.display_name() + " do?"
+		)
 
 func _refresh_hp_bars() -> void:
 	var enemy  : BattleParticipant = BattleSystem.enemy_participant
@@ -159,17 +164,19 @@ func _on_tecmons_pressed() -> void:
 		details.get_node("%MiniTecmon").texture = tecmon.data.mini_sprite
 		details.get_node("%TecmonName").text = tecmon.display_name()
 		details.get_node("%TecmonLvl").text = "Lv." + str(tecmon.level)
-		details.get_node("%TecmonHP").text = "HP: " + str(tecmon.current_hp) + "/" + str(tecmon.max_hp)
+		details.get_node("%TecmonHP").text = "HP: " + str(roundi(tecmon.current_hp)) + "/ " + str(roundi(tecmon.max_hp))
+		details.tecmon_hp_bar.value = tecmon.hp_percent() * 100
 		if tecmon.current_hp <= 0:
 			details.disabled = true
 		
 		details.selected.connect(_on_tecmon_switched)
-
+		details.hovered.connect(_on_tecmon_hovered)
+	
+	_on_tecmon_hovered()
 	tecmon_ui.show()
 	MessageBus._message_box.hide()
 	battle_ui.hide()
 	
-
 func _on_escape_pressed() -> void:
 	if not can_input:
 		return
@@ -196,21 +203,52 @@ func _on_battle_ended(outcome: BattleSystem.BattleOutcome) -> void:
 
 func _on_force_switch() -> void:
 	can_input = true
+	is_switching = true
+	force_switch = true
 	MessageBus._message_box.hide()
+	MessageBus._message_box._clear_passive()
 	tecmon_ui.get_node("%BackButton").disabled = true
 	tecmon_ui.get_node("%BackButton").hide()
 	_on_tecmons_pressed()
 	
-
 func _on_tecmon_switched() -> void:	
 	_refresh_hp_bars()
 	tecmon_ui.hide()
 	tecmon_ui.get_node("%BackButton").show()
 	tecmon_ui.get_node("%BackButton").disabled = false
+		
 	MessageBus._message_box.show()
 	battle_ui.show()
+	MessageBus.send(["You sent out " + BattleSystem.player_participant.display_name() + "!"])
+	await MessageBus.message_box_closed
+	
+	if not force_switch:
+		BattleSystem.skip_turn()
+	
+	is_switching = false
+	force_switch = false
+	MessageBus.send_passive("What will " + BattleSystem.player_participant.display_name() + " do?")
 
+func _on_tecmon_hovered():
+	var instance: TecmonInstance = BattleSystem.player_participant.current_mon
+	var data : TecmonData = instance.data
+	tecmon_swap_texture.texture = instance.data.front_sprite
+	
+	var ailment_text: String = "None"
+	if instance.ailments.size() > 0:
+		ailment_text = Global.AILMENT_MAP.get(instance.ailments[0].type, "Unknown")
 
+	var text: String = "%s\n[%s/%s]\nHP: %d/%d\nAilment: %s" % [
+		data.tecmon_name,
+		Enums.TecmonType.keys()[data.type_one],
+		Enums.TecmonType.keys()[data.type_two],
+		roundi(instance.current_hp),
+		roundi(instance.max_hp),
+		ailment_text
+	]
+	
+	tecmon_desc.text = text
+	
 func _on_back_button_pressed() -> void:
 	tecmon_ui.hide()
 	MessageBus._message_box.show()

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d2y5bb5r4rnrq" path="res://icon.svg" id="1_pi85e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tf16"]
-size = Vector2(16, 16)
+size = Vector2(14, 14)
 
 [sub_resource type="Theme" id="Theme_rkeic"]
 default_font_size = 10
@@ -14,15 +14,15 @@ collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_0tf16")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2006982543]
-position = Vector2(8, 8)
-shape = SubResource("RectangleShape2D_0tf16")
-
 [node name="Chest" type="TextureRect" parent="." unique_id=1322134736]
 custom_maximum_size = Vector2(16, 16)
 offset_right = 16.0
 offset_bottom = 16.0
 texture = ExtResource("1_pi85e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2006982543]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_0tf16")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1291404604]
 
@@ -65,6 +65,7 @@ prefix = "Lv."
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Name"
+max_length = 11
 
 [node name="BackButton" type="Button" parent="CanvasLayer/UI/HBoxContainer/VBoxContainer" unique_id=1520608738]
 unique_name_in_owner = true

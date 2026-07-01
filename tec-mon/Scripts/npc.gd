@@ -13,7 +13,7 @@ func _ready() -> void:
 
 func interact() -> void:
 	reset()
-	MessageBus.send(["Hello!", "Let's BATTLE!"], 20)
+	MessageBus.send(dialog, 20)
 	await MessageBus.message_box_closed
 	await SceneManager._transition_out()
 	BattleSystem.start_battle(party_instance, Global.player.tecmon_party)
