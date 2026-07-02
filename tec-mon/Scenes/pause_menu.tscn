@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://bmbcsa6wvn3gp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n3rge"]
+bg_color = Color(0, 0.3765285, 0.79224867, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83sw6"]
+bg_color = Color(0.2139624, 0.61188585, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 2
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1122323117]
+
+[node name="Control" type="Control" parent="." unique_id=1273170163]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="Control" unique_id=326472573]
+layout_mode = 0
+offset_left = -97.14285
+offset_top = -94.28571
+offset_right = 75.85715
+offset_bottom = 76.71429
+scale = Vector2(1.1142839, 1.114286)
+theme_override_styles/panel = SubResource("StyleBoxFlat_n3rge")
+
+[node name="Panel2" type="Panel" parent="Control" unique_id=1067677470]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -91.428566
+offset_top = -88.57143
+offset_right = -19.956818
+offset_bottom = -16.200287
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.5384655, 2.4871793)
+theme_override_styles/panel = SubResource("StyleBoxFlat_83sw6")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Control/Panel2" unique_id=1437159472]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

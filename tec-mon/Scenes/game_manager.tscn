@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bussxwbdfugjx" path="res://Scenes/message_manager.tscn" id="1_oj352"]
 [ext_resource type="PackedScene" uid="uid://p1turely2dsk" path="res://Scenes/levels/main_menu.tscn" id="2_mmt5l"]
 [ext_resource type="PackedScene" uid="uid://cmnxmwbnkr0fm" path="res://Scenes/battle_stage.tscn" id="3_mmt5l"]
+[ext_resource type="PackedScene" uid="uid://bmbcsa6wvn3gp" path="res://Scenes/pause_menu.tscn" id="5_fgdfb"]
 
 [node name="GameManager" type="Node" unique_id=818834755 groups=["GameManager"]]
 script = ExtResource("1_fgdfb")
@@ -16,3 +17,5 @@ script = ExtResource("1_fgdfb")
 layer = 2
 
 [node name="BattleStage" parent="." unique_id=601046398 instance=ExtResource("3_mmt5l")]
+
+[node name="PauseMenu" parent="." unique_id=1122323117 instance=ExtResource("5_fgdfb")]
