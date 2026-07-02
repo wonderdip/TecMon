@@ -281,9 +281,11 @@ libraries/ = SubResource("AnimationLibrary_4ao26")
 
 [node name="TecmonUI" parent="." unique_id=1340260547 instance=ExtResource("9_lpi3d")]
 unique_name_in_owner = true
+visible = false
 
 [node name="ItemUI" parent="." unique_id=558686737 instance=ExtResource("10_dcktj")]
 unique_name_in_owner = true
+visible = false
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="BattleUI/ActionMenu/VBoxContainer/HBoxContainer/Fight" to="." method="_on_fight_pressed"]

@@ -81,7 +81,6 @@ func _on_battle_started() -> void:
 	await SceneManager._transition_in()
 
 func _on_turn_ended() -> void:
-	print("turn ended received")
 	_refresh_hp_bars()
 	new_turn()
 
@@ -189,7 +188,7 @@ func _on_tecmon_switched(index: int) -> void:
 	force_switch = false
 	MessageBus.send_passive("What will " + BattleSystem.player_participant.display_name() + " do?")
 
-func _on_item_used(item: ItemData, target: TecmonInstance) -> void:
+func _on_item_used(item: ItemData, _target: TecmonInstance) -> void:
 	var outcome := ItemEffect.use_in_battle(item, BattleSystem.player_participant)
 
 	match outcome["result"]:

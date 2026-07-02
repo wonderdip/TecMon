@@ -12,7 +12,6 @@ func _on_back_button_pressed() -> void:
 	else:
 		get_tree().paused = false
 
-
 func _on_visibility_changed() -> void:
 	if visible and get_tree().paused:
 		parent_scene = 1

@@ -1,0 +1,205 @@
+[gd_resource type="Theme" format=3 uid="uid://bpr41avimp173"]
+
+[ext_resource type="Texture2D" uid="uid://c3wimhs8hxs4a" path="res://Assets/UI/option_button_disabled.png" id="1_enafr"]
+[ext_resource type="FontFile" uid="uid://cnww23kfbhjq0" path="res://Assets/Fonts/Minecraft.ttf" id="2_5ne6c"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oykix"]
+texture = ExtResource("1_enafr")
+texture_margin_left = 4.0
+texture_margin_top = 2.0
+texture_margin_right = 4.0
+texture_margin_bottom = 2.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kdnb7"]
+load_path = "res://.godot/imported/option_button_pressed.png-e5abec2bbdb13c3544fb2e1a1ff505f9.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_702e2"]
+texture = SubResource("CompressedTexture2D_kdnb7")
+texture_margin_left = 4.0
+texture_margin_top = 2.0
+texture_margin_right = 4.0
+texture_margin_bottom = 2.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qyryt"]
+load_path = "res://.godot/imported/h_slider.png-e2d6aea884eb14af8e360732d64a4c6e.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_23me3"]
+texture = SubResource("CompressedTexture2D_qyryt")
+texture_margin_left = 4.0
+texture_margin_top = 2.0
+texture_margin_right = 4.0
+texture_margin_bottom = 2.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_deree"]
+load_path = "res://.godot/imported/toggled_button.png-22aa7233e1ed7e207431bf00c2c80167.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yq7um"]
+load_path = "res://.godot/imported/toggle_button.png-fd59f30cd97dd2d3097efc1424ad2d40.ctex"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nqqw2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hanoc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kxh81"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r2i2h"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_my6iw"]
+load_path = "res://.godot/imported/slider_grabber.png-af74a2f67a690f608c4f8af80aaed426.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_svk1p"]
+load_path = "res://.godot/imported/slider_grabber.png-af74a2f67a690f608c4f8af80aaed426.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rmfd2"]
+load_path = "res://.godot/imported/h_slider filled.png-98962735ffe594d1e09f8734fc4a08bf.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l0wpn"]
+texture = SubResource("CompressedTexture2D_rmfd2")
+texture_margin_left = 5.0
+texture_margin_top = 3.0
+texture_margin_right = 5.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_k6cgp"]
+load_path = "res://.godot/imported/h_slider filled.png-98962735ffe594d1e09f8734fc4a08bf.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6xmaw"]
+texture = SubResource("CompressedTexture2D_k6cgp")
+texture_margin_left = 5.0
+texture_margin_top = 3.0
+texture_margin_right = 5.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_olo8q"]
+load_path = "res://.godot/imported/h_slider.png-e2d6aea884eb14af8e360732d64a4c6e.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3x8nh"]
+texture = SubResource("CompressedTexture2D_olo8q")
+texture_margin_left = 5.0
+texture_margin_top = 3.0
+texture_margin_right = 5.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_somet"]
+load_path = "res://.godot/imported/option_arrow.png-509510286fa118b435af70b1ee18c5d4.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bfkko"]
+load_path = "res://.godot/imported/option_button_pressed.png-e5abec2bbdb13c3544fb2e1a1ff505f9.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hmhu2"]
+texture = SubResource("CompressedTexture2D_bfkko")
+texture_margin_left = 5.0
+texture_margin_top = 3.0
+texture_margin_right = 5.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_p60fi"]
+load_path = "res://.godot/imported/h_slider.png-e2d6aea884eb14af8e360732d64a4c6e.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_aio2j"]
+texture = SubResource("CompressedTexture2D_p60fi")
+texture_margin_left = 5.0
+texture_margin_top = 3.0
+texture_margin_right = 5.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_oli7j"]
+load_path = "res://.godot/imported/option_button_pressed.png-e5abec2bbdb13c3544fb2e1a1ff505f9.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ctlxi"]
+texture = SubResource("CompressedTexture2D_oli7j")
+texture_margin_left = 5.0
+texture_margin_top = 3.0
+texture_margin_right = 5.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nd1n0"]
+load_path = "res://.godot/imported/check_box.png-870f29e0f7cd7b9f4af8f165314a44c7.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ygvb6"]
+load_path = "res://.godot/imported/unchecked_box.png-fe465da5b3f99d368036d0f29bc2739a.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wgkso"]
+load_path = "res://.godot/imported/hover_outline.png-c5cddb0f48fcf98e6ee783462d7cc4ff.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xxxtj"]
+texture = SubResource("CompressedTexture2D_wgkso")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+draw_center = false
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_syy4y"]
+load_path = "res://.godot/imported/h_slider.png-e2d6aea884eb14af8e360732d64a4c6e.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kwefr"]
+texture = SubResource("CompressedTexture2D_syy4y")
+texture_margin_left = 5.0
+texture_margin_top = 3.0
+texture_margin_right = 5.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3r8q4"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_i8e5e"]
+load_path = "res://.godot/imported/option_button_pressed.png-e5abec2bbdb13c3544fb2e1a1ff505f9.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v4asn"]
+texture = SubResource("CompressedTexture2D_i8e5e")
+texture_margin_left = 5.0
+texture_margin_top = 3.0
+texture_margin_right = 5.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nb4ah"]
+load_path = "res://.godot/imported/h_slider.png-e2d6aea884eb14af8e360732d64a4c6e.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t5s47"]
+texture = SubResource("CompressedTexture2D_nb4ah")
+texture_margin_left = 5.0
+texture_margin_top = 3.0
+texture_margin_right = 5.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6o5yw"]
+load_path = "res://.godot/imported/option_button_disabled.png-c470e97d0939e38fc153bf3c89893bd9.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ecr2w"]
+texture = SubResource("CompressedTexture2D_6o5yw")
+texture_margin_left = 5.0
+texture_margin_top = 3.0
+texture_margin_right = 5.0
+texture_margin_bottom = 3.0
+
+[resource]
+default_font = ExtResource("2_5ne6c")
+default_font_size = 10
+Button/styles/disabled = SubResource("StyleBoxTexture_oykix")
+Button/styles/hover = SubResource("StyleBoxTexture_702e2")
+Button/styles/normal = SubResource("StyleBoxTexture_23me3")
+Button/styles/pressed = SubResource("StyleBoxTexture_oykix")
+CheckButton/icons/checked = SubResource("CompressedTexture2D_deree")
+CheckButton/icons/unchecked = SubResource("CompressedTexture2D_yq7um")
+CheckButton/styles/disabled = SubResource("StyleBoxEmpty_nqqw2")
+CheckButton/styles/hover = SubResource("StyleBoxEmpty_hanoc")
+CheckButton/styles/normal = SubResource("StyleBoxEmpty_kxh81")
+CheckButton/styles/pressed = SubResource("StyleBoxEmpty_r2i2h")
+HSlider/icons/grabber = SubResource("CompressedTexture2D_my6iw")
+HSlider/icons/grabber_highlight = SubResource("CompressedTexture2D_svk1p")
+HSlider/styles/grabber_area = SubResource("StyleBoxTexture_l0wpn")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxTexture_6xmaw")
+HSlider/styles/slider = SubResource("StyleBoxTexture_3x8nh")
+Label/colors/font_color = Color(1, 1, 1, 1)
+OptionButton/icons/arrow = SubResource("CompressedTexture2D_somet")
+OptionButton/styles/hover = SubResource("StyleBoxTexture_hmhu2")
+OptionButton/styles/normal = SubResource("StyleBoxTexture_aio2j")
+OptionButton/styles/pressed = SubResource("StyleBoxTexture_ctlxi")
+PopupMenu/icons/radio_checked = SubResource("CompressedTexture2D_nd1n0")
+PopupMenu/icons/radio_unchecked = SubResource("CompressedTexture2D_ygvb6")
+PopupMenu/styles/hover = SubResource("StyleBoxTexture_xxxtj")
+PopupMenu/styles/panel = SubResource("StyleBoxTexture_kwefr")
+TabContainer/styles/panel = SubResource("StyleBoxEmpty_3r8q4")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxTexture_v4asn")
+TabContainer/styles/tab_selected = SubResource("StyleBoxTexture_t5s47")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxTexture_ecr2w")

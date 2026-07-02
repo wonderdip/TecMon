@@ -90,7 +90,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_ksbbd"]
 resource_name = "RunDown"
-length = 0.40000335419513283
+length = 0.4000033541951328
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -107,7 +107,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_miouo"]
 resource_name = "RunLeft"
-length = 0.40000335419513283
+length = 0.4000033541951328
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -124,7 +124,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_o3h8g"]
 resource_name = "RunRight"
-length = 0.40000335419513283
+length = 0.4000033541951328
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -141,7 +141,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_glx4g"]
 resource_name = "RunUp"
-length = 0.40000335419513283
+length = 0.4000033541951328
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false

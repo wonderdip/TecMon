@@ -9,6 +9,23 @@ size = Vector2(14, 14)
 [sub_resource type="Theme" id="Theme_rkeic"]
 default_font_size = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0tf16"]
+bg_color = Color(0.16565639, 0.16565642, 0.1656563, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iujqe"]
+bg_color = Color(0.09620472, 0.09620475, 0.09620469, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_paja5"]
+bg_color = Color(0.40832943, 0.4083295, 0.40832937, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rkeic"]
+bg_color = Color(0.26293245, 0.26293248, 0.26293233, 1)
+
 [node name="DevelopperConsole" type="StaticBody2D" unique_id=1758512668]
 collision_layer = 2
 collision_mask = 0
@@ -37,22 +54,45 @@ grow_vertical = 2
 theme = SubResource("Theme_rkeic")
 metadata/_edit_use_anchors_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI" unique_id=1992239365]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI" unique_id=1485233200]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 32.0
+offset_left = 8.0
 offset_top = 8.0
-offset_right = -32.0
+offset_right = -8.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/HBoxContainer" unique_id=13897845]
+[node name="TabContainer" type="TabContainer" parent="CanvasLayer/UI/VBoxContainer" unique_id=1437280834]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0tf16")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_iujqe")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_paja5")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_rkeic")
+current_tab = 0
+tab_0/title = "    Tecmon    "
+tab_1/title = "    Items    "
+
+[node name="Tecmon" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/TabContainer" unique_id=861503652]
+layout_mode = 2
+metadata/_tab_index = 0
+metadata/_tab_name = "    Tecmon    "
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/VBoxContainer/TabContainer/Tecmon" unique_id=103869185]
+custom_minimum_size = Vector2(88, 0)
 layout_mode = 2
 
-[node name="LvlBox" type="SpinBox" parent="CanvasLayer/UI/HBoxContainer/VBoxContainer" unique_id=1585027249]
+[node name="TecmonSearch" type="LineEdit" parent="CanvasLayer/UI/VBoxContainer/TabContainer/Tecmon/VBoxContainer" unique_id=2129459226]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Search..."
+
+[node name="LvlBox" type="SpinBox" parent="CanvasLayer/UI/VBoxContainer/TabContainer/Tecmon/VBoxContainer" unique_id=1585027249]
 unique_name_in_owner = true
 custom_maximum_size = Vector2(-1, 22)
 layout_mode = 2
@@ -61,23 +101,59 @@ value = 1.0
 rounded = true
 prefix = "Lv."
 
-[node name="Nickname" type="LineEdit" parent="CanvasLayer/UI/HBoxContainer/VBoxContainer" unique_id=815494247]
+[node name="Nickname" type="LineEdit" parent="CanvasLayer/UI/VBoxContainer/TabContainer/Tecmon/VBoxContainer" unique_id=815494247]
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Name"
 max_length = 11
 
-[node name="BackButton" type="Button" parent="CanvasLayer/UI/HBoxContainer/VBoxContainer" unique_id=1520608738]
-unique_name_in_owner = true
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/UI/VBoxContainer/TabContainer/Tecmon" unique_id=2090240964]
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
-text = "Back"
+size_flags_horizontal = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/UI/HBoxContainer" unique_id=2090240964]
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-
-[node name="ButtonList" type="VBoxContainer" parent="CanvasLayer/UI/HBoxContainer/ScrollContainer" unique_id=1497686498]
+[node name="TecmonList" type="VBoxContainer" parent="CanvasLayer/UI/VBoxContainer/TabContainer/Tecmon/ScrollContainer" unique_id=1497686498]
 unique_name_in_owner = true
 layout_mode = 2
 
-[connection signal="pressed" from="CanvasLayer/UI/HBoxContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[node name="Items" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/TabContainer" unique_id=294074429]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+metadata/_tab_name = "    Items    "
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/VBoxContainer/TabContainer/Items" unique_id=654125568]
+custom_minimum_size = Vector2(88, 0)
+layout_mode = 2
+
+[node name="ItemSearch" type="LineEdit" parent="CanvasLayer/UI/VBoxContainer/TabContainer/Items/VBoxContainer" unique_id=2062057732]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Search..."
+
+[node name="ItemAmountBox" type="SpinBox" parent="CanvasLayer/UI/VBoxContainer/TabContainer/Items/VBoxContainer" unique_id=2050676170]
+unique_name_in_owner = true
+custom_maximum_size = Vector2(-1, 22)
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+rounded = true
+prefix = "x"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/UI/VBoxContainer/TabContainer/Items" unique_id=1993129552]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ItemList" type="VBoxContainer" parent="CanvasLayer/UI/VBoxContainer/TabContainer/Items/ScrollContainer" unique_id=220648077]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="CanvasLayer/UI/VBoxContainer" unique_id=1520608738]
+unique_name_in_owner = true
+custom_maximum_size = Vector2(-1, 16)
+layout_mode = 2
+text = "Close
+"
+
+[connection signal="pressed" from="CanvasLayer/UI/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

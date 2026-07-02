@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://7c6x878jski6" path="res://Assets/Characters/ForestNpcs.png" id="2_fo5tq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tdvfm"]
-radius = 8.0
+radius = 7.0
 
 [node name="NPC" type="StaticBody2D" unique_id=105489987]
 collision_layer = 2

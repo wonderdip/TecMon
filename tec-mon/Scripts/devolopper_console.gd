@@ -1,91 +1,144 @@
 extends StaticBody2D
 
-var _tecmons: Array[TecmonData]
-var dir_path: String = "res://TecMons/"
+var _tecmons: Array[TecmonData] = []
+var _items: Array[ItemData] = []
 
-@onready var button_list: VBoxContainer = %ButtonList
+const TECMON_PATH := "res://TecMons/"
+const ITEM_PATH := "res://Items/"
+
 @onready var ui: Control = %UI
-@onready var lvl_box: SpinBox = %LvlBox
-@onready var nickname_box: LineEdit = %Nickname
 @onready var back_button: Button = %BackButton
 
-var buttons: Array[Button]
+@onready var tab_bar: TabContainer = %TabContainer
+
+@onready var tecmon_list: VBoxContainer = %TecmonList
+@onready var tecmon_search: LineEdit = %TecmonSearch
+@onready var lvl_box: SpinBox = %LvlBox
+@onready var nickname_box: LineEdit = %Nickname
+
+@onready var item_list: VBoxContainer = %ItemList
+@onready var item_search: LineEdit = %ItemSearch
+@onready var item_amount_box: SpinBox = %ItemAmountBox
+
+var _all_tecmon_buttons: Array[Button] = []
+var _all_item_buttons: Array[Button] = []
+var _busy: bool = false
 
 func _ready() -> void:
 	ui.hide()
-	_register_all()
-	
+	_register_all_tecmons()
+	_register_all_items()
+	tecmon_search.text_changed.connect(_filter_tecmons)
+	item_search.text_changed.connect(_filter_items)
+
 func interact(_player: Player) -> void:
 	if ui.visible:
 		return
-	AudioManager.play_sfx("open_chest")
 	Global.set_movement_blocked(true)
 	ui.show()
-	populate_list()
+	_populate_tecmons()
+	_populate_items()
 
-func clear_list():
-	for button in button_list.get_children():
-		button.queue_free()
-		buttons.erase(button)
-		
-func populate_list() -> void:
-	clear_list()
+func _populate_tecmons() -> void:
+	for b in _all_tecmon_buttons:
+		b.queue_free()
+	_all_tecmon_buttons.clear()
+
 	for tecmon in _tecmons:
-		var button := Button.new()
-		button.text = tecmon.tecmon_name
-		button.pressed.connect(_on_button_pressed.bind(button))
-		button_list.add_child(button)
-		buttons.append(button)
+		var btn := Button.new()
+		btn.text = "#%d  %s" % [tecmon.id, tecmon.tecmon_name]
+		btn.pressed.connect(_on_tecmon_pressed.bind(tecmon))
+		tecmon_list.add_child(btn)
+		_all_tecmon_buttons.append(btn)
 
-func _on_button_pressed(button: Button):
-	var tecmon: TecmonData = get_tecmon(button.text)
-	var lvl: int = roundi(lvl_box.value)
-	var nickname: String = nickname_box.text
-	
-	
-	if Global.player.tecmon_party.size() == 6:
+func _populate_items() -> void:
+	for b in _all_item_buttons:
+		b.queue_free()
+	_all_item_buttons.clear()
+
+	for item in _items:
+		var btn := Button.new()
+		btn.text = item.item_name
+		btn.pressed.connect(_on_item_pressed.bind(item))
+		item_list.add_child(btn)
+		_all_item_buttons.append(btn)
+
+func _filter_tecmons(query: String) -> void:
+	query = query.to_lower()
+	for btn in _all_tecmon_buttons:
+		btn.visible = query.is_empty() or btn.text.to_lower().contains(query)
+
+func _filter_items(query: String) -> void:
+	query = query.to_lower()
+	for btn in _all_item_buttons:
+		btn.visible = query.is_empty() or btn.text.to_lower().contains(query)
+
+func _on_tecmon_pressed(tecmon: TecmonData) -> void:
+	if _busy:
 		return
-		
-	Global.player.tecmon_party.push_front(TecmonInstance.create(tecmon, lvl, nickname, false))
-	var tecmon_instance: TecmonInstance = Global.player.tecmon_party.get(0)
-	
-	MessageBus.send(["Spawned lv." + str(lvl) + " " + tecmon.tecmon_name + " with nickname " + tecmon_instance.display_name()])
-	
-	back_button.disabled = true
-	for i in buttons:
-		i.disabled = true
-		
+	if Global.player.tecmon_party.size() >= 6:
+		await _say("Party is full! (max 6)")
+		return
+
+	var lvl := roundi(lvl_box.value)
+	var nickname := nickname_box.text
+	var instance := TecmonInstance.create(tecmon, lvl, nickname, false)
+	Global.player.tecmon_party.push_front(instance)
+
+	await _say("Spawned lv.%d %s (nickname: %s)" % [lvl, tecmon.tecmon_name, instance.display_name()])
+
+func _on_item_pressed(item: ItemData) -> void:
+	if _busy:
+		return
+	var amount := roundi(item_amount_box.value)
+	Global.player.inventory.add(item, amount)
+	await _say("Added x%d %s to inventory." % [amount, item.item_name])
+
+func _say(text: String) -> void:
+	_set_buttons_enabled(false)
+	MessageBus.send([text])
 	await MessageBus.message_box_closed
-	
-	for i in buttons:
-		i.disabled = false
-	back_button.disabled = false
+	_set_buttons_enabled(true)
 	Global.set_movement_blocked(true)
 
-	
-func _register_all() -> void:
-	var dir := DirAccess.open(dir_path)
-	if dir == null:
+func _set_buttons_enabled(enabled: bool) -> void:
+	_busy = not enabled
+	back_button.disabled = not enabled
+	for btn in _all_tecmon_buttons:
+		btn.disabled = not enabled
+	for btn in _all_item_buttons:
+		btn.disabled = not enabled
+
+func _register_all_tecmons() -> void:
+	var dir := DirAccess.open(TECMON_PATH)
+	if not dir:
 		return
 	dir.list_dir_begin()
 	var file := dir.get_next()
 	while file != "":
 		if file.get_extension() == "tres":
-			var res: TecmonData = load(dir_path + file)
+			var res := load(TECMON_PATH + file)
 			if res is TecmonData:
 				_tecmons.append(res)
 		file = dir.get_next()
 	_tecmons.sort_custom(func(a, b): return a.id < b.id)
 
-func get_tecmon(tecmon_name: String) -> TecmonData:
-	for t in _tecmons:
-		if t.tecmon_name == tecmon_name:
-			return t
-	return null
-
-func get_all() -> Array:
-	return _tecmons
+func _register_all_items() -> void:
+	var dir := DirAccess.open(ITEM_PATH)
+	if not dir:
+		return
+	dir.list_dir_begin()
+	var file := dir.get_next()
+	while file != "":
+		if file.get_extension() == "tres":
+			var res := load(ITEM_PATH + file)
+			if res is ItemData:
+				_items.append(res)
+		file = dir.get_next()
+	_items.sort_custom(func(a, b): return a.item_name < b.item_name)
 
 func _on_back_button_pressed() -> void:
+	tecmon_search.text = ""
+	item_search.text = ""
 	ui.hide()
 	Global.set_movement_blocked(false)
